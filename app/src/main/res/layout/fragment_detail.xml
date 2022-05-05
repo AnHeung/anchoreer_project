@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieViewModel"
+            type="com.anchoreer.presentation.ui.movie.MovieViewModel" />
+        <variable
+            name="item"
+            type="com.anchoreer.domain.model.MovieItem" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.movie.MovieActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="1dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp"
+                app:title="@{item.title}"
+                app:navigationIcon="@drawable/ic_back_press">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_top_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_top_layout_height">
+
+                <ImageView
+                    android:id="@+id/detail_movie_img"
+                    android:layout_width="@dimen/movie_img_width"
+                    android:layout_height="@dimen/movie_img_height"
+                    android:layout_marginStart="@dimen/default_margin"
+                    app:setImageUrl="@{item.image}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_title_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:ellipsize="end"
+                    android:text="@{item.title}"
+                    android:maxLines="1"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/detail_movie_img"
+                    app:layout_constraintRight_toLeftOf="@+id/detail_bookmark_img"
+                    app:layout_constraintTop_toTopOf="@id/detail_movie_img"
+                    tools:text="제목" />
+
+                <TextView
+                    android:id="@+id/detail_director_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/movie_director_txt(item.director)}"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    app:layout_constraintBottom_toTopOf="@+id/detail_actor_txt"
+                    app:layout_constraintEnd_toEndOf="@+id/detail_title_txt"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_title_txt"
+                    app:layout_constraintVertical_chainStyle="spread"
+                    tools:text="감독" />
+
+                <TextView
+                    android:id="@+id/detail_actor_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{@string/movie_actor_txt(item.actor)}"
+                    app:layout_constraintBottom_toTopOf="@+id/detail_rating_txt"
+                    app:layout_constraintEnd_toEndOf="@+id/detail_title_txt"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_director_txt"
+                    tools:text="출연" />
+
+                <TextView
+                    android:id="@+id/detail_rating_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{@string/movie_rating_txt(item.userRating)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/detail_title_txt"
+                    app:layout_constraintStart_toStartOf="@+id/detail_title_txt"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_actor_txt"
+                    tools:text="평점" />
+
+                <ImageView
+                    app:setBookmark="@{movieViewModel.isBookmark}"
+                    android:id="@+id/detail_bookmark_img"
+                    android:layout_width="@dimen/bookmark_icon_size"
+                    android:layout_height="@dimen/bookmark_icon_size"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:src="@drawable/favorite_off_24"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/detail_movie_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <WebView
+                    android:id="@+id/detail_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <ProgressBar
+                app:isProgress="@{movieViewModel.isProgress}"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -4,6 +4,7 @@
 ## 적용기술
 
 ### Android Clean Architecture 
+### MVVM
 ### DaggerHilt 
 ### Retrofit2
 ### Navigation
